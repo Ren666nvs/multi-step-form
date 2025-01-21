@@ -95,9 +95,7 @@ const StepOne = ({ handleNextStep, handleBackStep }) => {
               className="flex flex-1 items-center justify-center h-[44px] rounded-md bg-black text-white transition-all duration-300 hover:opacity-80"
             >
               Continue 1/3
-              <Image 
               
-              />
             </button>
           </div>
 
