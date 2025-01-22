@@ -1,5 +1,5 @@
 import React from 'react'
-
+import Image from 'next/image';
 const StepTwo = (props) => {
   const { handleNextStep, handleBackStep } = props;
 
@@ -9,7 +9,12 @@ const StepTwo = (props) => {
       
       <div className="flex justify-center mb-7">
        
-        
+      <Image 
+            src="/pinecone-logo.svg" 
+            alt="Pinecone Logo" 
+            width={60} 
+            height={60} 
+          />
       </div>
 
 

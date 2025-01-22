@@ -69,7 +69,7 @@ const StepThree = (props) => {
                 <div className="flex flex-col items-center">
                   <div className="bg-white rounded-full w-10 h-10 flex items-center justify-center">
                     <Image 
-                      src="/icons/add-image-icon.svg" 
+                      src="/add-image-icon.svg" 
                       alt="Add Image" 
                       width={24} 
                       height={24} 
@@ -89,14 +89,14 @@ const StepThree = (props) => {
             />
           </div>
 
-          <div className="flex justify-between items-center w-full mt-auto mb-4">
+          <div className="flex w-full gap-x-2 mt-auto">
   <button 
     type="button" 
-    className="flex items-center justify-center w-32 gap-x-3 rounded-md border border-[#CBD5E1] transition-all duration-300 hover:bg-gray-100"
+    className="flex flex-1 items-center justify-center h-[44px] rounded-md bg-gray-400 text-white transition-all duration-300 hover:opacity-80"
     onClick={handleBackStep}
   >
     <Image 
-      src="/icons/back-arrow-icon.svg" 
+      src="/back-arrow-icon.svg" 
       alt="Back" 
       width={12} 
       height={12} 
@@ -105,12 +105,12 @@ const StepThree = (props) => {
   </button>
   <button 
     type="submit" 
-    className="flex items-center justify-center flex-1 h-[44px] gap-x-3 rounded-md bg-[#121316] text-white transition-all duration-300 hover:opacity-80"
+    className="flex flex-1 items-center justify-center h-[44px] rounded-md bg-black text-white transition-all duration-300 hover:opacity-80"
     onClick={handleNextStep}
   >
     Continue 3/3
     <Image 
-      src="/icons/forward-arrow-icon.svg" 
+      src="/forward-arrow-icon.svg" 
       alt="Next" 
       width={12} 
       height={12} 
