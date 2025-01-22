@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+// import { isStepOneValid} from "@/utils/stepOneValidation";
 
 const StepOne = ({ handleNextStep, handleBackStep }) => {
   return (
@@ -81,23 +82,29 @@ const StepOne = ({ handleNextStep, handleBackStep }) => {
           </fieldset>
 
           
-          <div className="flex w-full gap-x-2 mt-auto">
-            <button 
+           <div className="flex w-full gap-x-2 mt-auto">
+            {/* <button 
               type="button" 
               onClick={handleBackStep} 
               className="flex flex-1 items-center justify-center h-[44px] rounded-md bg-gray-400 text-white transition-all duration-300 hover:opacity-80"
             >
               Back
-            </button>
+            </button> */}
             <button 
               type="submit" 
               onClick={handleNextStep} 
               className="flex flex-1 items-center justify-center h-[44px] rounded-md bg-black text-white transition-all duration-300 hover:opacity-80"
             >
               Continue 1/3
-              
+              <Image 
+      src="/forward-arrow-icon.svg" 
+      alt="Next" 
+      width={12} 
+      height={12} 
+    />
             </button>
-          </div>
+
+          </div> 
 
         </form>
       </div>
