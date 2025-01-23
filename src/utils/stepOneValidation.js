@@ -1,4 +1,4 @@
-const isStepOneValid = (data) => {
+ export const isStepOneValid = (data) => {
     const {firstName} = data;
     const errors = {};
     let isValid = true;

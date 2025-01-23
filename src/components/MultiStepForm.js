@@ -1,52 +1,66 @@
-"use client" ;
+"use client";
 
-import React, {useState} from 'react' ;
-import StepOne from './StepOne';
-import StepTwo from './StepTwo';
-import StepThree from './StepThree';
-import FormFinish from './FormFinish';
+import React, { useState } from "react";
+import StepOne from "./StepOne";
+import StepTwo from "./StepTwo";
+import StepThree from "./StepThree";
+import FormFinish from "./FormFinish";
+
 const MultiStepForm = () => {
-    const [currentStep, setCurrentStep] = useState(0);
-    const [formValue] = useState({
-        firstNaME: "",
-        lastName: "",
-        userName: "",
-        phoneNumber: "",
+  const [currentStep, setCurrentStep] = useState(0);
+  const [formValue, setFormValue] = useState({
+    firstName: "",
+    lastName: "",
+    userName: "",
+    phoneNumber: "",
+  });
+  const [formError, setFormError] = useState({
+    firstName: "",
+    lastName: "",
+    userName: "",
+    phoneNumber: "",
+  });
 
+  const handleError = (errors) => {
+    setFormError((prev) => ({ ...prev, ...errors }));
+  };
+
+  const clearError = () => {
+    setFormError({
+      firstName: "",
+      lastName: "",
+      userName: "",
+      phoneNumber: "",
     });
-    const [formError, setFormError] = useState({
-        firstNaME: "",
-        lastName: "",
-        userName: "",
-        phoneNumber: "",
-    });
+  };
 
-    const handleEror = (errors) => {
-        setFormError((prev) => ({...prev, ...errors}));
-    };
+  const steps = [StepOne, StepTwo, StepThree, FormFinish];
+  const Step = steps[currentStep];
 
-    const Step = [StepOne, StepTwo, StepThree, FormFinish][currentStep];
-    const handleNextStep = () => {
-        if (currentStep !== 3){
-            setCurrentStep((prevStep) => prevStep + 1);
-        }
-    };
-    const handleBackStep = () => {
-        if (currentStep !== 0){
-            setCurrentStep((prevStep) => prevStep - 1)
-        }
+  const handleNextStep = () => {
+    if (currentStep < steps.length - 1) {
+      setCurrentStep((prevStep) => prevStep + 1);
     }
+  };
+
+  const handleBackStep = () => {
+    if (currentStep > 0) {
+      setCurrentStep((prevStep) => prevStep - 1);
+    }
+  };
+
   return (
     <div>
-        <Step
+      <Step
         errors={formError}
         formValue={formValue}
-         handleNextStep={handleNextStep}
-          handleBackStep={handleBackStep}
-          handleEror={handleEror}
-           />
-       </div>
+        handleNextStep={handleNextStep}
+        handleBackStep={handleBackStep}
+        handleError={handleError}
+        setFormValue={setFormValue}
+      />
+    </div>
   );
 };
 
-export default MultiStepForm
+export default MultiStepForm;
