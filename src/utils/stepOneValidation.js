@@ -3,7 +3,7 @@
     const errors = {};
     let isValid = true;
 
-    if (firstName.length <= 1) {
+    if (firstName.length <= 0) {
         errors.firstName = "First name must contain at least 6 character"
         isValid = false;
     }

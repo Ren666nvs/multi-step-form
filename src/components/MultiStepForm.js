@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import StepOne from "./StepOne";
 import StepTwo from "./StepTwo";
 import StepThree from "./StepThree";
 import FormFinish from "./FormFinish";
+import { AnimatePresence, motion } from "framer-motion";
 
 const MultiStepForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -25,7 +26,7 @@ const MultiStepForm = () => {
     setFormError((prev) => ({ ...prev, ...errors }));
   };
 
-  const clearError = () => {
+  const clearError = (name) => {
     setFormError({
       firstName: "",
       lastName: "",
@@ -49,17 +50,40 @@ const MultiStepForm = () => {
     }
   };
 
+  useEffect(() => {
+    const data = localStorage.getItem("formData");
+    if (data) {
+      console.log(JSON.parse(data));
+    }
+  }, []);
+
+  const animationVariants = {
+    enter: { opacity: 0, x: 100 },
+    center: { opacity: 1, x: 0 },
+    exit: { opacity: 0, x: -100 },
+  };
+
   return (
-    <div>
-      <Step
-        errors={formError}
-        formValue={formValue}
-        handleNextStep={handleNextStep}
-        handleBackStep={handleBackStep}
-        handleError={handleError}
-        setFormValue={setFormValue}
-      />
-    </div>
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={currentStep}
+        initial="enter"
+        animate="center"
+        exit="exit"
+        variants={animationVariants}
+        transition={{ duration: 0.5 }}
+      >
+        <Step
+          errors={formError}
+          formValue={formValue}
+          handleNextStep={handleNextStep}
+          handleBackStep={handleBackStep}
+          handleError={handleError}
+          clearError={clearError}
+          setFormValue={setFormValue}
+        />
+      </motion.div>
+    </AnimatePresence>
   );
 };
 

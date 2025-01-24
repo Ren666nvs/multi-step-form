@@ -1,10 +1,17 @@
 import React from "react";
 import Image from "next/image";
-import { isStepOneValid} from "@/utils/stepOneValidation";
+import { isStepOneValid } from "@/utils/stepOneValidation";
+import { motion } from "motion/react"
 
 const StepOne = (props) => {
-  const { handleNextStep, errors, formValue, handleError, setFormValue } =
-    props;
+  const {
+    handleNextStep,
+    errors,
+    formValue,
+    handleError,
+    setFormValue,
+    clearError,
+  } = props;
   const error = false;
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -12,15 +19,28 @@ const StepOne = (props) => {
       ...prev,
       [name]: value,
     }));
+    clearError(name);
   };
   const handleFormNextStep = () => {
     const { isValid, errors } = isStepOneValid(formValue);
     if (isValid) {
+      const localData = {
+        ...formValue,
+        currentStep: 1,
+      };
+      localStorage.setItem("formData", JSON.stringify(localData));
       handleNextStep();
     }
     handleError(errors);
   };
   return (
+    // <AnimatePresence>
+    // <motion.div 
+    // initial={{ x: 300, opacity: 0}}
+    // animate={{x:0, opacity: 1}}
+    // exit={{ x: -300, opacity: 0 } }
+    // >
+
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
       <div className="flex flex-col w-[480px] min-h-[655px] p-8 bg-white rounded-lg shadow-lg">
         <div className="flex justify-center mb-7">
@@ -54,12 +74,10 @@ const StepOne = (props) => {
               placeholder="Your first name"
               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               onChange={handleChange}
-            
             />
-              {/* {errors.firstName.length > 0 && (
-                <p className="text-red-500">*</p>
-              )} */}
-  
+            {errors.firstName.length > 0 && (
+              <p className="text-red-500">Нэрээ оруулна уу</p>
+            )}
           </fieldset>
 
           <fieldset className="space-y-2">
@@ -77,6 +95,9 @@ const StepOne = (props) => {
               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               required
             />
+            {errors.firstName.length > 0 && (
+              <p className="text-red-500">Овгоо оруулна уу.</p>
+            )}
           </fieldset>
 
           <fieldset className="space-y-2">
@@ -94,6 +115,9 @@ const StepOne = (props) => {
               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               required
             />
+             {errors.firstName.length > 0 && (
+            <p className="text-red-500">Хэрэглэгчийн нэрээ оруулна уу</p>
+          )}
           </fieldset>
 
           <div className="flex w-full gap-x-2 mt-auto">
