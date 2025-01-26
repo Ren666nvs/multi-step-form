@@ -1,11 +1,20 @@
- export const isStepOneValid = (data) => {
-    const {firstName} = data;
-    const errors = {};
+export const isStepOneValid = (formValue) => {
+    let errors = {};
     let isValid = true;
-
-    if (firstName.length <= 0) {
-        errors.firstName = "First name must contain at least 6 character"
-        isValid = false;
+  
+    if (!formValue.firstName.trim()) {
+      errors.firstName = "Нэрээ оруулна уу";
+      isValid = false;
     }
-    return { isValid, errors};
-};
+    if (!formValue.lastName.trim()) {
+      errors.lastName = "Овгоо оруулна уу";
+      isValid = false;
+    }
+    if (!formValue.userName.trim()) {
+      errors.userName = "Хэрэглэгчийн нэрээ оруулна уу";
+      isValid = false;
+    }
+  
+    return { isValid, errors };
+  };
+  
