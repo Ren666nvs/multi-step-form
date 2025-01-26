@@ -3,7 +3,7 @@ export const isStepOneValid = (formValue) => {
     let isValid = true;
   
     if (!formValue.firstName.trim()) {
-      errors.firstName = "Нэрээ оруулна уу";
+      errors.firstName = "Нэрээ оруулна уу ";
       isValid = false;
     }
     if (!formValue.lastName.trim()) {

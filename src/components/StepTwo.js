@@ -1,17 +1,27 @@
-import React from "react";
+"use client";
+
+import React, { useEffect } from "react";
 import Image from "next/image";
+import { isStepTwoValid } from "@/utils/stepTwoValidation";
+
 const StepTwo = (props) => {
   const {
-    handleNextStep,
-    
     handleBackStep,
+    handleNextStep,
     errors,
     formValue,
     handleError,
     setFormValue,
     clearError,
   } = props;
-  const error = false;
+
+  useEffect(() => {
+    const savedData = localStorage.getItem("formData");
+    if (savedData) {
+      setFormValue(JSON.parse(savedData));
+    }
+  }, [setFormValue]);
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormValue((prev) => ({
@@ -20,18 +30,22 @@ const StepTwo = (props) => {
     }));
     clearError(name);
   };
-  const handleFormNextStep = () => {
-    const { isValid, errors } = isStepOneValid(formValue);
+
+  const handleFormNextStep = (e) => {
+    e.preventDefault();
+    const { isValid, errors } = isStepTwoValid(formValue);
     if (isValid) {
       const localData = {
         ...formValue,
-        currentStep: 1,
+        currentStep: 2,
       };
       localStorage.setItem("formData", JSON.stringify(localData));
       handleNextStep();
+    } else {
+      handleError(errors);
     }
-    handleError(errors);
   };
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
       <div className="flex flex-col w-[480px] min-h-[655px] p-8 bg-white rounded-lg shadow-lg">
@@ -50,77 +64,84 @@ const StepTwo = (props) => {
         <p className="text-[18px] text-center text-gray-500">
           Please provide all current information accurately.
         </p>
-        <form className="flex flex-col flex-grow gap-y-3 mt-6">
+
+        <form className="flex flex-col flex-grow gap-y-3 mt-6" onSubmit={handleFormNextStep}>
           <fieldset className="space-y-2">
             <label
-              htmlFor="firstName"
+              htmlFor="email"
               className="block text-sm font-semibold text-gray-700"
             >
               Email <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
-              id="firstName"
-              name="firstName"
+              id="email"
+              name="email"
               placeholder="Your email"
               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
-              required
+              value={formValue.email || ""}
               onChange={handleChange}
             />
-               {errors.firstName.length > 0 && (
-              <p className="text-red-500">Нэрээ оруулна уу</p>
-            )}
+            {errors.email && <p className="text-red-500">{errors.email}</p>}
           </fieldset>
 
           <fieldset className="space-y-2">
             <label
-              htmlFor="lastName"
+              htmlFor="phoneNumber"
               className="block text-sm font-semibold text-gray-700"
             >
-              Phone number<span className="text-red-500">*</span>
+              Phone Number <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
-              id="lastName"
-              name="lastName"
-              placeholder="Your phone number "
+              id="phoneNumber"
+              name="phoneNumber"
+              placeholder="Your phone number"
               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
-              required
+              value={formValue.phoneNumber || ""}
+              onChange={handleChange}
             />
+            {errors.phoneNumber && <p className="text-red-500">{errors.phoneNumber}</p>}
           </fieldset>
 
           <fieldset className="space-y-2">
             <label
-              htmlFor="username"
+              htmlFor="password"
               className="block text-sm font-semibold text-gray-700"
             >
               Password <span className="text-red-500">*</span>
             </label>
             <input
-              type="text"
-              id="username"
-              name="username"
+              type="password"
+              id="password"
+              name="password"
               placeholder="Your password"
               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
-              required
+              value={formValue.password || ""}
+              onChange={handleChange}
             />
+            {errors.password && <p className="text-red-500">{errors.password}</p>}
           </fieldset>
+
           <fieldset className="space-y-2">
             <label
-              htmlFor="username"
+              htmlFor="confirmPassword"
               className="block text-sm font-semibold text-gray-700"
             >
-              Confirm password <span className="text-red-500">*</span>
+              Confirm Password <span className="text-red-500">*</span>
             </label>
             <input
-              type="text"
-              id="username"
-              name="username"
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
               placeholder="Confirm password"
               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
-              required
+              value={formValue.confirmPassword || ""}
+              onChange={handleChange}
             />
+            {errors.confirmPassword && <p className="text-red-500">{errors.confirmPassword}</p>}
           </fieldset>
+
           <div className="flex w-full gap-x-2 mt-auto">
             <button
               type="button"
@@ -133,12 +154,10 @@ const StepTwo = (props) => {
                 width={12}
                 height={12}
               />
-
               <span>Back</span>
             </button>
             <button
               type="submit"
-              onClick={handleNextStep}
               className="flex flex-1 items-center justify-center h-[44px] rounded-md bg-black text-white transition-all duration-300 hover:opacity-80"
             >
               Continue 2/3
