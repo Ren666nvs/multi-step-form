@@ -1,14 +1,65 @@
-import React, { useState } from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import { isStepThreeValid } from "@/utils/stepThreeValidation";
 
 const StepThree = (props) => {
-  const { handleNextStep, handleBackStep } = props;
-  const [selectedImage, setSelectedImage] = useState(null);
+  const {
+    handleNextStep,
+    handleBackStep,
+    errors,
+    formValue,
+    handleError,
+    setFormValue,
+    clearError,
+  } = props;
+
+  const [selectedImage, setSelectedImage] = useState(
+    formValue.profileImage || null
+  );
+
+  useEffect(() => {
+    const savedData = localStorage.getItem("formData");
+    if (savedData) {
+      setFormValue(JSON.parse(savedData));
+    }
+  }, [setFormValue]);
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormValue((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    clearError(name);
+  };
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setSelectedImage(URL.createObjectURL(file));
+      const imageUrl = URL.createObjectURL(file);
+      setSelectedImage(imageUrl);
+      setFormValue((prev) => ({
+        ...prev,
+        profileImage: imageUrl,
+      }));
+      clearError("profileImage");
+    }
+  };
+
+  const handleFormNextStep = (e) => {
+    e.preventDefault();
+    const { isValid, errors } = isStepThreeValid(formValue);
+    if (isValid) {
+      const localData = {
+        ...formValue,
+        currentStep: 3,
+      };
+      localStorage.setItem("formData", JSON.stringify(localData));
+      handleNextStep();
+    } else {
+      handleError(errors);
     }
   };
 
@@ -24,39 +75,48 @@ const StepThree = (props) => {
               height={60}
             />
           </div>
-          <h2 className="text-[26px] text-foreground font-semibold text-center">
+          <h2 className="text-[26px] text-gray-900 font-semibold text-center">
             Join Us! 😎
           </h2>
-          <p className="text-[18px] text-center text-[#8E8E8E]">
+          <p className="text-[18px] text-center text-gray-500">
             Please provide all current information accurately.
           </p>
         </div>
 
-        <form className="flex flex-col flex-grow gap-y-6">
+        <form
+          className="flex flex-col flex-grow gap-y-6"
+          onSubmit={handleFormNextStep}
+        >
           <fieldset className="flex flex-col space-y-2">
             <label
               htmlFor="dateOfBirth"
-              className="block text-sm font-semibold text-[#334155]"
+              className="block text-sm font-semibold text-gray-700"
             >
-              Date of birth <span className="text-error">*</span>
+              Date of birth <span className="text-red-500">*</span>
             </label>
             <input
               type="date"
+              id="dateOfBirth"
               name="dateOfBirth"
               placeholder="--/--/--"
-              className="w-full p-3 text-base leading-5 rounded-md outline outline-[#CBD5E1] focus:outline-[#0CA5E9] text-[#121316]"
+              className="w-full p-3 text-base leading-5 rounded-md border border-gray-300 focus:border-blue-500 text-gray-900"
+              value={formValue.dateOfBirth || ""}
+              onChange={handleChange}
             />
+            {errors.dateOfBirth && (
+              <p className="text-red-500">{errors.dateOfBirth}</p>
+            )}
           </fieldset>
 
           <div className="flex flex-col space-y-2">
             <label
               htmlFor="profileImage"
-              className="block text-sm font-semibold text-[#334155]"
+              className="block text-sm font-semibold text-gray-700"
             >
-              Profile image <span className="text-error">*</span>
+              Profile image <span className="text-red-500">*</span>
             </label>
             <div
-              className="flex flex-col items-center justify-center gap-y-2 cursor-pointer bg-gray-100 h-[180px] border rounded-md border-solid"
+              className="flex flex-col items-center justify-center gap-y-2 cursor-pointer bg-gray-100 h-[180px] border rounded-md border-solid border-gray-300"
               onClick={() => document.getElementById("profileImage").click()}
             >
               {selectedImage ? (
@@ -89,6 +149,9 @@ const StepThree = (props) => {
               accept="image/*"
               onChange={handleImageChange}
             />
+            {errors.profileImage && (
+              <p className="text-red-500">{errors.profileImage}</p>
+            )}
           </div>
 
           <div className="flex w-full gap-x-2 mt-auto">
@@ -108,7 +171,6 @@ const StepThree = (props) => {
             <button
               type="submit"
               className="flex flex-1 items-center justify-center h-[44px] rounded-md bg-black text-white transition-all duration-300 hover:opacity-80"
-              onClick={handleNextStep}
             >
               Continue 3/3
               <Image

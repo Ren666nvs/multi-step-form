@@ -65,7 +65,10 @@ const StepTwo = (props) => {
           Please provide all current information accurately.
         </p>
 
-        <form className="flex flex-col flex-grow gap-y-3 mt-6" onSubmit={handleFormNextStep}>
+        <form
+          className="flex flex-col flex-grow gap-y-3 mt-6"
+          onSubmit={handleFormNextStep}
+        >
           <fieldset className="space-y-2">
             <label
               htmlFor="email"
@@ -101,7 +104,9 @@ const StepTwo = (props) => {
               value={formValue.phoneNumber || ""}
               onChange={handleChange}
             />
-            {errors.phoneNumber && <p className="text-red-500">{errors.phoneNumber}</p>}
+            {errors.phoneNumber && (
+              <p className="text-red-500">{errors.phoneNumber}</p>
+            )}
           </fieldset>
 
           <fieldset className="space-y-2">
@@ -120,7 +125,9 @@ const StepTwo = (props) => {
               value={formValue.password || ""}
               onChange={handleChange}
             />
-            {errors.password && <p className="text-red-500">{errors.password}</p>}
+            {errors.password && (
+              <p className="text-red-500">{errors.password}</p>
+            )}
           </fieldset>
 
           <fieldset className="space-y-2">
@@ -139,7 +146,9 @@ const StepTwo = (props) => {
               value={formValue.confirmPassword || ""}
               onChange={handleChange}
             />
-            {errors.confirmPassword && <p className="text-red-500">{errors.confirmPassword}</p>}
+            {errors.confirmPassword && (
+              <p className="text-red-500">{errors.confirmPassword}</p>
+            )}
           </fieldset>
 
           <div className="flex w-full gap-x-2 mt-auto">

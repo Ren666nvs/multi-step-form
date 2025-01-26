@@ -25,7 +25,7 @@ const StepOne = (props) => {
     const { name, value } = event.target;
     setFormValue((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: value, 
     }));
     clearError(name);
   };
@@ -49,7 +49,12 @@ const StepOne = (props) => {
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
       <div className="flex flex-col w-[480px] min-h-[655px] p-8 bg-white rounded-lg shadow-lg">
         <div className="flex justify-center mb-7">
-          <Image src="/pinecone-logo.svg" alt="Pinecone Logo" width={60} height={60} />
+          <Image
+            src="/pinecone-logo.svg"
+            alt="Pinecone Logo"
+            width={60}
+            height={60}
+          />
         </div>
 
         <h2 className="text-[26px] text-gray-900 font-semibold text-center">
@@ -61,7 +66,10 @@ const StepOne = (props) => {
 
         <form className="flex flex-col flex-grow gap-y-3 mt-6">
           <fieldset className="space-y-2">
-            <label htmlFor="firstName" className="block text-sm font-semibold text-gray-700">
+            <label
+              htmlFor="firstName"
+              className="block text-sm font-semibold text-gray-700"
+            >
               First Name <span className="text-red-500">*</span>
             </label>
             <input
@@ -73,11 +81,16 @@ const StepOne = (props) => {
               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               onChange={handleChange}
             />
-            {errors.firstName && <p className="text-red-500">Нэрээ оруулна уу</p>}
+            {errors.firstName && (
+              <p className="text-red-500">Нэрээ оруулна уу</p>
+            )}
           </fieldset>
 
           <fieldset className="space-y-2">
-            <label htmlFor="lastName" className="block text-sm font-semibold text-gray-700">
+            <label
+              htmlFor="lastName"
+              className="block text-sm font-semibold text-gray-700"
+            >
               Last Name <span className="text-red-500">*</span>
             </label>
             <input
@@ -89,11 +102,16 @@ const StepOne = (props) => {
               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               onChange={handleChange}
             />
-            {errors.lastName && <p className="text-red-500">Овгоо оруулна уу</p>}
+            {errors.lastName && (
+              <p className="text-red-500">Овгоо оруулна уу</p>
+            )}
           </fieldset>
 
           <fieldset className="space-y-2">
-            <label htmlFor="userName" className="block text-sm font-semibold text-gray-700">
+            <label
+              htmlFor="userName"
+              className="block text-sm font-semibold text-gray-700"
+            >
               User Name <span className="text-red-500">*</span>
             </label>
             <input
@@ -105,7 +123,9 @@ const StepOne = (props) => {
               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               onChange={handleChange}
             />
-            {errors.userName && <p className="text-red-500">Хэрэглэгчийн нэрээ оруулна уу</p>}
+            {errors.userName && (
+              <p className="text-red-500">Хэрэглэгчийн нэрээ оруулна уу</p>
+            )}
           </fieldset>
 
           <div className="flex w-full gap-x-2 mt-auto">
@@ -115,7 +135,12 @@ const StepOne = (props) => {
               className="flex flex-1 items-center justify-center h-[44px] rounded-md bg-black text-white transition-all duration-300 hover:opacity-80"
             >
               Continue 1/3
-              <Image src="/forward-arrow-icon.svg" alt="Next" width={12} height={12} />
+              <Image
+                src="/forward-arrow-icon.svg"
+                alt="Next"
+                width={12}
+                height={12}
+              />
             </button>
           </div>
         </form>
