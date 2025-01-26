@@ -1,8 +1,36 @@
 import React from "react";
 import Image from "next/image";
 const StepTwo = (props) => {
-  const { handleNextStep, handleBackStep } = props;
-
+  const {
+    handleNextStep,
+    handleBackStep,
+    errors,
+    formValue,
+    handleError,
+    setFormValue,
+    clearError,
+  } = props;
+  const error = false;
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormValue((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    clearError(name);
+  };
+  const handleFormNextStep = () => {
+    const { isValid, errors } = isStepOneValid(formValue);
+    if (isValid) {
+      const localData = {
+        ...formValue,
+        currentStep: 1,
+      };
+      localStorage.setItem("formData", JSON.stringify(localData));
+      handleNextStep();
+    }
+    handleError(errors);
+  };
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
       <div className="flex flex-col w-[480px] min-h-[655px] p-8 bg-white rounded-lg shadow-lg">
@@ -36,7 +64,11 @@ const StepTwo = (props) => {
               placeholder="Your email"
               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               required
+              onChange={handleChange}
             />
+               {errors.firstName.length > 0 && (
+              <p className="text-red-500">Нэрээ оруулна уу</p>
+            )}
           </fieldset>
 
           <fieldset className="space-y-2">
