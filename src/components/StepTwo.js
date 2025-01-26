@@ -5,8 +5,7 @@ const StepTwo = (props) => {
     handleNextStep,
     handleBackStep,
     errors,
-    formValue,
-    handleError,
+   
     setFormValue,
     clearError,
   } = props;
