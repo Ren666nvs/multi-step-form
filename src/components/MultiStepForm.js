@@ -53,10 +53,10 @@ const MultiStepForm = () => {
   useEffect(() => {
     const data = localStorage.getItem("formData");
     if (data) {
-      console.log(JSON.parse(data));
+      setFormValue(JSON.parse(data));
     }
   }, []);
-
+  
   const animationVariants = {
     enter: { opacity: 0, x: 100 },
     center: { opacity: 1, x: 0 },

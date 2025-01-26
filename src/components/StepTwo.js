@@ -3,9 +3,11 @@ import Image from "next/image";
 const StepTwo = (props) => {
   const {
     handleNextStep,
+    
     handleBackStep,
     errors,
-   
+    formValue,
+    handleError,
     setFormValue,
     clearError,
   } = props;

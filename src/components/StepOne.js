@@ -49,7 +49,7 @@ const StepOne = (props) => {
           Join Us! 😎
         </h2>
         <p className="text-[18px] text-center text-gray-500">
-          Please provide all current information accurately.
+          Please provide all current information accurately..
         </p>
 
         <form className="flex flex-col flex-grow gap-y-3 mt-6">
@@ -110,9 +110,9 @@ const StepOne = (props) => {
               onChange={handleChange}
               required
             />
-            {errors.firstName.length > 0 && (
-              <p className="text-red-500">Хэрэглэгчийн нэрээ оруулна уу</p>
-            )}
+
+              {errors.userName && <p className="text-red-500">Хэрэглэгчийн нэрээ оруулна уу</p>}
+            
           </fieldset>
 
           <div className="flex w-full gap-x-2 mt-auto">
